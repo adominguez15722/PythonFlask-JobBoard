@@ -8,7 +8,8 @@ app = Flask(__name__)
 @app.route('/employer/<employer_id>')
 def employer(employer_id):
     employer = execute_sql('SELECT * FROM employer WHERE id=?', [employer_id], single=True)
-    return render_template('employer.html', employer=employer)
+    execute_sql('SELECT job.id, job.title, job.description, job.salary FROM job JOIN employer ON employer.id = job.employer_id WHERE employer.id = ?', [employer_id])
+    return render_template('employer.html', employer=employer, jobs=jobs)
 
 
 @app.route('/job/<job_id>')
