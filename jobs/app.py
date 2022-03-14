@@ -5,6 +5,8 @@ PATH = 'db/jobs.sqlite'
 
 app = Flask(__name__)
 
+
+@app.route('/job/<job_id>')
 def job():
     return render_template('job.html')
 
