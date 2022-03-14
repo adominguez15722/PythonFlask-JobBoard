@@ -15,9 +15,11 @@
 {{ show_jobs(jobs) }}
 
   <h2>Reviews</h2>
-    {# TODO: Remove comment and add for loop
-      {% %}
-    #}
+    
+      {% for review in reviews %}
+        {{return review}}
+      {% endfor %}
+    
     <div class="box">
       <article class="media">
         <div class="media-left">
