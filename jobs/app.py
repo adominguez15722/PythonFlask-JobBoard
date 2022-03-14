@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 @app.route('/job/<job_id>')
 def job(job_id):
-    
-    execute_sql('SELECT job_id', job_id)
+
+    execute_sql('SELECT job_id, job.title, job', job_id)
     return render_template('job.html')
 
 
