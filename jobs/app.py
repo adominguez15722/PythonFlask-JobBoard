@@ -14,6 +14,11 @@ def employer(employer_id):
     execute_sql('SELECT review, rating, title, date, status FROM review JOIN employer ON employer.id = review.employer_id WHERE employer.id = ?', [employer_id])
     return render_template('employer.html', employer=employer, jobs=jobs, reviews=reviews)
 
+@app.route('/employer/<employer_id>/review', methods=('GET', 'POST'))
+def review(employer_id):
+    return render_template('review.html', employer_id=employer_id)
+
+
 
 @app.route('/job/<job_id>')
 def job(job_id):
