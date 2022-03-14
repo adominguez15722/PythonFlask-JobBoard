@@ -1,3 +1,4 @@
+from email.policy import default
 from multiprocessing import connection
 from flask import Flask, render_template, g
 import sqlite3
@@ -8,7 +9,7 @@ app = Flask(__name__)
 
 
 def open_connection():
-    getattr(g, '_connection')
+    getattr(g, '_connection', default=None)
     if connection is None:
         connection, g._connection = sqlite3.connect(PATH)
     return getattr(connection)
