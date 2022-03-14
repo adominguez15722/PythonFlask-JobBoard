@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 
 @app.route('/job/<job_id>')
-def job():
+def job(job_id):
+    
+    execute_sql('SELECT job_id', job_id)
     return render_template('job.html')
 
 
