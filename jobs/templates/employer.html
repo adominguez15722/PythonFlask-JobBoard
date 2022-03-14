@@ -21,16 +21,16 @@
     <div class="box">
       <article class="media">
         <div class="media-left">
-            {% for _ in range(0, review['rating']): %}
+            {% for _ in range(0, review['rating']) %}
             <span class="fa fa-star checked"></span>
             {% endfor %}
         </div>
         <div class="media-content">
           <div class="content">
               <p>
-                  {{ review['title'] <strong>}}
-                  {{ review['status'] <small>}}
-                  {{ review['date'] <small>}}
+                  {{ review['title'] <strong> }}
+                  {{ review['status'] <small> }}
+                  {{ review['date'] <small> }}
                     {{ review }}
               </p>
           </div>
