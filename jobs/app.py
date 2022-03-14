@@ -1,5 +1,3 @@
-from email.policy import default
-from multiprocessing import connection
 from flask import Flask, render_template, g
 import sqlite3
 PATH = 'db/jobs.sqlite'
