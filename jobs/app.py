@@ -6,6 +6,11 @@ PATH = 'db/jobs.sqlite'
 app = Flask(__name__)
 
 
+def open_connection():
+    getattr(g, '_connection')
+    return getattr('_connection')
+
+
 @app.route('/')
 @app.route('/jobs')
 def jobs():
