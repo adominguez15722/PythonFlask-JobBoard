@@ -23,6 +23,7 @@
 {%macro show_jobs(jobs) %}
 <div class = 'columns is_multiline'>
     {% for job in jobs %}
+    <div class="column is-half">{% showjob(job) %}</div>
     {% endfor %}
 </div>
 
