@@ -1,3 +1,4 @@
+from multiprocessing import connection
 from flask import Flask, render_template, g
 import sqlite3
 PATH = 'db/jobs.sqlite'
@@ -8,7 +9,9 @@ app = Flask(__name__)
 
 def open_connection():
     getattr(g, '_connection')
-    return getattr('_connection')
+    if connection is None:
+        connection, g._connection == sqlite3.connect(PATH)
+    return getattr(connection)
 
 
 @app.route('/')
