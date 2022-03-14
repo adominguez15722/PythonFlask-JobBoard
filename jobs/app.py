@@ -1,30 +1,12 @@
-from flask import Flask, render_template, g
 import sqlite3
+import datetime
+from flask import Flask, render_template, g, request
+
+
 PATH = 'db/jobs.sqlite'
 
 
 app = Flask(__name__)
-
-@app.route('/employer/<employer_id>')
-def employer(employer_id):
-    employer = execute_sql('SELECT * FROM employer WHERE id=?', [employer_id], single=True)
-    execute_sql('SELECT job.id, job.title, job.description, job.salary FROM job JOIN employer ON employer.id = job.employer_id WHERE employer.id = ?', [employer_id])
-    
-    reviews = execute_sql('SELECT * FROM reviews WHERE id=?')
-    execute_sql('SELECT review, rating, title, date, status FROM review JOIN employer ON employer.id = review.employer_id WHERE employer.id = ?', [employer_id])
-    return render_template('employer.html', employer=employer, jobs=jobs, reviews=reviews)
-
-@app.route('/employer/<employer_id>/review', methods=('GET', 'POST'))
-def review(employer_id):
-    return render_template('review.html', employer_id=employer_id)
-
-
-
-@app.route('/job/<job_id>')
-def job(job_id):
-
-    execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id WHERE job.id = ?', [job_id], single=True)
-    return render_template('job.html', job=job)
 
 
 def open_connection():
@@ -61,6 +43,28 @@ def close_connection(exception):
 def jobs():
     jobs = execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id')
     return render_template('index.html', jobs=jobs)
+
+
+@app.route('/job/<job_id>')
+def job(job_id):
+    execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id WHERE job.id = ?', [job_id], single=True)
+    return render_template('job.html', job=job)    
+
+
+@app.route('/employer/<employer_id>')
+def employer(employer_id):
+    employer = execute_sql('SELECT * FROM employer WHERE id=?', [employer_id], single=True)
+    execute_sql('SELECT job.id, job.title, job.description, job.salary FROM job JOIN employer ON employer.id = job.employer_id WHERE employer.id = ?', [employer_id])
+    
+    reviews = execute_sql('SELECT * FROM reviews WHERE id=?')
+    execute_sql('SELECT review, rating, title, date, status FROM review JOIN employer ON employer.id = review.employer_id WHERE employer.id = ?', [employer_id])
+    return render_template('employer.html', employer=employer, jobs=jobs, reviews=reviews)
+
+
+@app.route('/employer/<employer_id>/review', methods=('GET', 'POST'))
+def review(employer_id):
+    return render_template('review.html', employer_id=employer_id)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
